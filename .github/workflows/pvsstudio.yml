@@ -8,6 +8,9 @@ jobs:
   build-analyze:
     if: ${{ secrets.PVS_STUDIO_CREDENTIALS != '' }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
     env:
       FBT_NO_SYNC: "true"
       TARGETS: f7
