@@ -6,6 +6,7 @@ on:
     branches: ["master"]
 jobs:
   build-analyze:
+    if: ${{ secrets.PVS_STUDIO_CREDENTIALS != '' }}
     runs-on: ubuntu-latest
     env:
       FBT_NO_SYNC: "true"
