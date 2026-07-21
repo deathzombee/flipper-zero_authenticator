@@ -8,6 +8,7 @@ jobs:
   build:
     name: Build and analyze
     runs-on: ubuntu-latest
+    if: ${{ secrets.SONAR_TOKEN != '' }}
     env:
       BUILD_WRAPPER_OUT_DIR: "$HOME/build_wrapper_output" # Directory where build-wrapper output will be placed
     steps:
