@@ -1,0 +1,3 @@
+paths-ignore:
+  - "totp/lib/wolfssl"
+  - "totp/lib/micro-ecc"
