@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+permissions:
+  contents: write
 jobs:
   update-ofw-catalog-branch:
     runs-on: ubuntu-latest
@@ -23,5 +25,13 @@ jobs:
           printf "\n#define TOTP_APP_VERSION_META \"$(git rev-parse --short HEAD).ofw-catalog\"\n" >> totp/version.h
           sed -i 's~apps_data/totp/plugins/~apps_assets/totp/plugins/~' totp/cli/cli.c
       - run: |
+          if git diff --quiet; then
+            echo "::notice::No OFW catalog changes detected; skipping commit and push."
+            exit 0
+          fi
+
           git commit -am "chore: Applied OFW catalog changes"
-          git push -u --force origin master_ofw-catalog
+
+          if ! git push -u --force origin master_ofw-catalog; then
+            echo "::warning::Unable to push to master_ofw-catalog. Skipping push because repository write access is not configured."
+          fi
